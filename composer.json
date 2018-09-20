@@ -1,0 +1,12 @@
+{
+    "name": "ibidrepo/oauth2-server-php",
+    "description": "Oauth for IBID Developement",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Andi Fauji Akbar",
+            "email": "faujiakbar@gmail.com"
+        }
+    ],
+    "require": {}
+}
