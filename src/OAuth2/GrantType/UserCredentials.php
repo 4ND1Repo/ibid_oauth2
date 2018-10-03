@@ -32,7 +32,7 @@ class UserCredentials implements GrantTypeInterface
 
     public function validateRequest(RequestInterface $request, ResponseInterface $response)
     {
-        if (!$request->request("password") || !$request->request("username")) {
+        if (is_null($request->request("password")) || !$request->request("username")) {
             $response->setError(400, 'invalid_request', 'Kehilangan parameter: "username" dan "password" diwajibkan ada');
 
             return null;

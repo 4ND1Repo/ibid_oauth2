@@ -366,13 +366,14 @@ class Pdo implements
     public function setUser($username, $password, $firstName = null, $lastName = null, $ipAddress, $createdOn, $MemberCardTMP, $GroupId, $CompanyId, $Phone, $Active , $ByOmni)
     {
         // do not store in plaintext
-        $password = $this->hashPassword($password);
+        $password = $password?$this->hashPassword($password):'';
         $email = $username;
         $fields = array();
 
 
         // if it exists, update it.
-        if ($this->getUser($username)) {
+        if ($stm = $this->getUser($username)) {
+            $password = $password?$password:$stm['password'];
             $stmt = $this->db->prepare($sql = sprintf('UPDATE %s SET password=:password, first_name=:firstName, last_name=:lastName, IpAddress=:ipAddress'.($MemberCardTMP?', MemberCardTMP=:MemberCardTMP':'').($GroupId?', GroupId=:GroupId':'').($CompanyId?', CompanyId=:CompanyId':'').($Phone?', Phone=:Phone':'').($Active?', Active=:Active':'').($ByOmni?', ByOmni=:ByOmni':'').' where username=:username', $this->config['user_table']));
             if($MemberCardTMP) $fields[] = 'MemberCardTMP';
             if($GroupId) $fields[] = 'GroupId';
